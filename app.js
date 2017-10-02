@@ -6,14 +6,18 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/Booking',function(err,db){
-  if(!err)
-  console.log('connected');
-});
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+mongoose.connect('mongodb://localhost:27017/Booking', { useMongoClient: true, promiseLibrary: global.Promise },function (mongoError,db) {
+  if(mongoError){
+    console.log(mongoError);
+  }else{
+    console.log('connectd');
+  }
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

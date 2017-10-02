@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-var adminLogin = new mongoose.Schema({
+//console.log(db.collection('Users').find());
+var login = new mongoose.Schema({
   fisrtname : String,
   lastname : String,
   Role : String,
@@ -10,7 +11,7 @@ var adminLogin = new mongoose.Schema({
   password: String
 }, {collection: 'Users'});
 
-var adminLoginModel = mongoose.model('adminLogin', adminLogin);
+var loginModel = mongoose.model('login', login);
 
 
 /* GET users listing. */
@@ -19,19 +20,28 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/register',function(req, res){
-  var userDetails = new adminLoginModel(req.body);
-  userDetails.save(function(err, data){
-    if(err){
-      console.log(">>>>err " + err );
-    }
-    res.send(data)
-  });
+    loginModel.find({email:req.body.email},function(err, data) {
+      if(data.length > 0){
+          res.send('user already existed');
+      }else{
+          loginModel.save(function (err, data) {
+              if (err) {
+                  console.log(">>>>err " + err);
+              }
+              res.send(data);
+          });
+      }
+    });
 });
 
-router.get('/login',function(req, res){
-  adminLoginModel.find({email:req.body.email,Password:req.body.password}, function(err, data){
-    console.log(">>>>" + data );
-  });
+router.post('/login',function(req, res){
+    loginModel.find({email:req.body.email,password:req.body.password},function(err, data){
+      if(err){
+
+      }else{
+        res.send(data);
+      }
+    });
 });
 
 module.exports = router;
