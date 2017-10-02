@@ -24,7 +24,14 @@ router.post('/register',function(req, res){
       if(data.length > 0){
           res.send('user already existed');
       }else{
-          loginModel.save(function (err, data) {
+        var register = new loginModel({
+            fisrtname : req.body.fisrtname,
+            lastname : req.body.lastname,
+            Role : req.body.Role,
+            email : req.body.email,
+            password: req.body.password
+        });
+          register.save(function (err, data) {
               if (err) {
                   console.log(">>>>err " + err);
               }
