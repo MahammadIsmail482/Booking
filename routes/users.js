@@ -20,12 +20,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/register',function(req, res){
+    console.log('comming',req.body)
     loginModel.find({email:req.body.email},function(err, data) {
       if(data.length > 0){
           res.send('user already existed');
       }else{
         var register = new loginModel({
-            fisrtname : req.body.fisrtname,
+            firstname : req.body.fisrtname,
             lastname : req.body.lastname,
             Role : req.body.Role,
             email : req.body.email,
