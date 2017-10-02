@@ -11,7 +11,7 @@ var users = require('./routes/users');
 
 var app = express();
 
-mongoose.connect('mongodb://localhost:27017/Booking', { useMongoClient: true, promiseLibrary: global.Promise },function (mongoError,db) {
+mongoose.connect('mongodb://192.168.0.21:27017/Booking', { useMongoClient: true, promiseLibrary: global.Promise },function (mongoError,db) {
   if(mongoError){
     console.log(mongoError);
   }else{
